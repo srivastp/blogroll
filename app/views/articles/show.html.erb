@@ -1,0 +1,33 @@
+<div>
+  <h1><%= @article.title %></h1>
+
+  <p>
+    Tags:
+    <% @article.tags.each do |tag| %>
+        <%= link_to tag.name, tag_path(tag) %>
+    <% end %>
+  </p>
+
+  <div style="padding: 20px 0px 10px 0px">
+    <% if @article.image.exists? %>
+      <p><%= image_tag @article.image.url %></p>
+    <% end %>
+
+    <p><%= @article.body %></p>
+
+  </div>
+  
+  <hr/>
+  <h3>Comments - (<%= @article.comments.size %>)</h3>
+  <%= render partial: 'articles/comment', collection: @article.comments %>
+</div>
+
+<hr/>
+<div>
+  <%= render partial: 'comments/form' %>
+</div>
+
+
+<%= link_to "<< Back to Articles", articles_path %> |
+<%= link_to "Delete", article_path(@article), method: :delete, data: {confirm: 'Really delete the article?'} %> |
+<%= link_to "Edit", edit_article_path(@article) %>
